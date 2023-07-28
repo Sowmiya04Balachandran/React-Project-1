@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import ProductForm from './components/ProductForm';
+import ProductList from './components/ProductList';
 
-function App() {
+const App = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Load data from local storage when the component mounts
+    const storedProducts = JSON.parse(localStorage.getItem('products'));
+    if (storedProducts) {
+      setProducts(storedProducts);
+    }
+  }, []);
+
+  const handleAddProduct = (newProduct) => {
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  };
+
+  // Update local storage whenever the products array changes
+  useEffect(() => {
+    localStorage.setItem('products', JSON.stringify(products));
+  }, [products]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Product Management App</h1>
+      <ProductForm addProduct={handleAddProduct} />
+      <ProductList products={products} />
     </div>
   );
-}
+};
 
 export default App;
+
+
+
+
+
