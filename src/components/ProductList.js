@@ -1,10 +1,13 @@
 import React from 'react';
+import ElectronicItem from './ElectronisItem';
+import SkinCareItem from './SkinCareItem';
+import FoodItem from './FoodItem';
 
 const ProductList = (props) => {
   const groupedProducts = {};
 
   for (const product of props.products) {
-    const { category } = product;
+    const  category  = product.category;
     if (!groupedProducts[category]) {
       groupedProducts[category] = [product];
     } else {
@@ -15,53 +18,14 @@ const ProductList = (props) => {
   return (
     <div>
       <h2>Product List</h2>
-
-      <h3>Electronic Items</h3>
-      {groupedProducts['electronic item'] && (
-        <div>
-        
-          <ul>
-            {groupedProducts['electronic item'].map((product, index) => (
-              <li key={index}>
-                <strong>Product Name:</strong> {product.productName}
-                <br />
-                ID: {product.productId}, Price: {product.price}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-         <h3>Food Items</h3>
-      {groupedProducts['food item'] && (
-        <div>
-        
-          <ul>
-            {groupedProducts['food item'].map((product, index) => (
-              <li key={index}>
-                <strong>Product Name:</strong> {product.productName}
-                <br />
-                ID: {product.productId}, Price: {product.price}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-          <h3>Skincare Items</h3>
-      {groupedProducts['skincare item'] && (
-        <div>
-        
-          <ul>
-            {groupedProducts['skincare item'].map((product, index) => (
-              <li key={index}>
-                <strong>Product Name:</strong> {product.productName}
-                <br />
-                ID: {product.productId}, Price: {product.price}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      <h2>Electronic Items</h2>
+      {groupedProducts['electronic item'] && <ElectronicItem products={groupedProducts['electronic items']} />}
+      <h2>SkinCare Items</h2>
+      {groupedProducts['skinCare item'] && <SkinCareItem  products={groupedProducts['skincare items']} />}
+      <h2>Food Items</h2>
+      {groupedProducts['food item'] && <FoodItem   products={groupedProducts['food item']}/>}
+            
+      </div>
   );
 };
 
